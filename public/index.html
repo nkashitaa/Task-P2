@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>DEV@Deakin - Personal Website</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-gray-100 font-TimesNewRoman">
+
+    <!-- Navigation Bar -->
+    <header class="bg-white shadow p-4">
+        <nav class="space-x-6">
+            <a href="#about" class="hover:text-teal-600">About</a>
+            <a href="#work" class="hover:text-teal-600">Work</a>
+            <a href="#contact" class="hover:text-teal-600">Contact</a>
+        </nav>
+    </header>
+
+    <!-- Banner with Hover Effect -->
+    <section class="relative h-64 group overflow-hidden">
+        <img src="photo1.jpg" alt="Banner" class="w-full h-full object-cover" />
+        <div
+            class="absolute bottom-0 w-full bg-black/70 text-center p-3 transform translate-y-full group-hover:translate-y-0 duration-300 ">
+            <p class="text-white text-lg">
+                Hey, I'm <span class="text-teal-400 font-semibold">N Kashitaa</span>
+            </p>
+        </div>
+    </section>
+
+    <!-- Author Profile -->
+    <section id="about" class="text-center p-8">
+        <img src="photo5.png" alt="Profile" class="w-28 h-28 rounded-full mx-auto mb-4" />
+        <p>I am a N Kashitaa, currently studying AI and ML. </p>
+    </section>
+
+    <!-- Portfolio Projects -->
+    <section id="work" class="p-8">
+        <h2 class="text-xl font-bold text-center text-teal-600 mb-6">Here's what I've done so far</h2>
+        <div class="space-y-6">
+            <!-- Project 1 -->
+            <div class="bg-white shadow p-10 rounded">
+                <img src="photo3.jpg" alt="Project 1" class="w-full h-40 object-cover rounded mb-2" />
+                <h3 class="text-lg font-bold">Ocean-Poly</h3>
+                <p class="text-sm">OceanMonopoly (OceanPoly) is an ocean-themed board game where players explore the
+                    deep sea, buy prime marine territories, and build underwater properties. As you roll the dice and
+                    move around the board, you must manage your resources wisely, answer multiple-choice trivia to gain
+                    perks, and collect "stay charge" penalties whenever rivals land on your spaces. It blends classic
+                    property trading with fast-paced trivia, turning every match into an exciting, competitive race to
+                    build the ultimate aquatic empire without going bankrupt.
+                </p>
+                <a href="https://github.com/nkashitaa" class="text-teal-600 text-sm">View on GitHub →</a>
+            </div>
+            <!-- Project 2 -->
+            <div class="bg-white shadow p-10 rounded">
+                <img src="photo4.jpg" alt="Project 2" class="w-full h-40 object-cover rounded mb-2" />
+                <h3 class="text-lg font-bold">Emotion Beater (AI Wellness App)</h3>
+                <p class="text-sm">Emotion Beater is a fast-paced game designed to test your focus, impulse control, and
+                    emotional
+                    balance under pressure. Players are pushed through rapidly changing scenarios, unexpected setbacks,
+                    and tense challenges meant to trigger frustration, panic, or rush decisions. To advance and win, you
+                    have to recognize emotional traps in real time, keep a calm mindset, and make clear, rational
+                    choices before time runs out or your stress meter peaks. It turns self-regulation and mental
+                    resilience into an engaging, interactive challenge.</p>
+                <a href="https://github.com/nkashitaa" class="text-teal-600 text-sm">View on GitHub →</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Responsive Gallery -->
+    <section class="p-8">
+        <h2 class="text-xl font-bold text-center text-teal-600 mb-6">My Photos</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
+            <img src="photo5.jpg" alt="Gallery 1" class="w-full h-40 object-cover rounded" />
+            <img src="photo6.jpg" alt="Gallery 2" class="w-full h-40 object-cover rounded" />
+            <img src="photo7.jpg" alt="Gallery 3" class="w-full h-40 object-cover rounded" />
+            <img src="photo8.jpg" alt="Gallery 4" class="w-full h-40 object-cover rounded" />
+        </div>
+    </section>
+
+    <!-- Sign-Up Section -->
+    <section class="p-6 text-center bg-gray-200">
+        <div class="flex justify-center items-center gap-4 flex-wrap">
+            <span class="font-bold text-sm tracking-wide">SIGN UP FOR OUR DAILY INSIDER</span>
+            <form id="subscribe-form" class="inline-flex gap-2">
+                <input type="email" id="email" placeholder="Enter your email" required class="p-2 border rounded" />
+                <button type="submit" class="bg-teal-600 text-white px-4 py-2 rounded">Subscribe</button>
+            </form>
+        </div>
+        <p id="response-msg" class="mt-2 text-sm font-semibold"></p>
+    </section>
+
+    <script>
+        const form = document.getElementById('subscribe-form');
+        const msg = document.getElementById('response-msg');
+
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            const email = document.getElementById('email').value;
+
+            try {
+                const res = await fetch('/subscribe', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({ email })
+                });
+                const data = await res.json();
+                msg.innerText = data.message || 'Subscribed successfully!';
+                msg.style.color = res.ok ? 'green' : 'red';
+                if (res.ok) form.reset();
+            } catch (err) {
+                msg.innerText = 'Failed to subscribe.';
+                msg.style.color = 'red';
+            }
+        });
+    </script>
+</body>
+
+</html>
